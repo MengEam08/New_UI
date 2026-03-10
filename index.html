@@ -1,0 +1,1194 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>AMF Express - Sidebar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="shortcut icon" href="/image/FavIcon.png" type="image/x-icon" />
+    <style>
+      @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap");
+      @import url('https://fonts.googleapis.com/css2?family=Kantumruy+Pro:wght@300;400;500;600;700&display=swap');
+
+      * {
+        font-family: "Inter", "Roboto", "Segoe UI", Arial, sans-serif;
+      }
+      :root {
+        --primary: #001f4d;
+        --primary-dark: #012e6b;
+        --secondary-white: #001f4d;
+        --secondary-red: #dc2626;
+        --secondary-red-light: #ef4444;
+      }
+
+      .sidebar {
+        width: 280px;
+        height: 100vh;
+        position: fixed;
+        left: 0;
+        top: 0;
+        overflow-y: auto;
+        background: var(--secondary-white);
+      }
+
+      .khmer-font {
+        font-family: "Kantumruy Pro", "Inter", "Roboto", "Segoe UI", Arial, sans-serif;
+      }
+
+      .side-head-footer {
+        background: var(--primary);
+      }
+
+      .menu-item {
+        transition: all 0.3s ease;
+      }
+
+      .menu-item.active {
+        background-color:#991b1b;
+        color: white;
+      }
+
+      .submenu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+
+      .submenu.open {
+        max-height: 1000px;
+      }
+
+      .rotate-icon {
+        transition: transform 0.3s ease;
+      }
+
+      .rotate-icon.open {
+        transform: rotate(180deg);
+      }
+
+      .country-flag {
+        font-size: 1.1em;
+      }
+      
+      .nested-submenu {
+        max-height: 0;
+        overflow: hidden;
+        transition: max-height 0.3s ease;
+      }
+      
+      .nested-submenu.open {
+        max-height: 500px;
+      }
+
+      /* Language Switch Button */
+      .lang-switch {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+      }
+
+      .lang-switch:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      }
+
+      .lang-switch i {
+        font-size: 16px;
+      }
+
+      /* Hide elements based on language */
+      .lang-en { display: block; }
+      .lang-km { display: none; }
+      
+      body.khmer-mode .lang-en { display: none; }
+      body.khmer-mode .lang-km { display: block; }
+      body.khmer-mode * {
+        font-family: "Kantumruy Pro", "Inter", "Roboto", "Segoe UI", Arial, sans-serif;
+      }
+
+      .main-content {
+        margin-left: 280px;
+        min-height: 100vh;
+        background: #f3f4f6;
+      }
+
+      /* Card hover effect */
+      .stat-card {
+        transition: all 0.3s ease;
+      }
+      .stat-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 24px rgba(0,0,0,0.15);
+      }
+
+      /* Table row hover */
+      .table-row-hover:hover {
+        background-color: #f9fafb;
+      }
+
+      /* Status badges */
+      .status-active {
+        background-color: #dcfce7;
+        color: #166534;
+      }
+      .status-inactive {
+        background-color: #fee2e2;
+        color: #991b1b;
+      }
+
+      /* Tier badges */
+      .tier-gold {
+        background-color: #fef3c7;
+        color: #92400e;
+      }
+      .tier-silver {
+        background-color: #e5e7eb;
+        color: #4b5563;
+      }
+      .tier-standard {
+        background-color: #dbeafe;
+        color: #1e40af;
+      }
+
+      /* Button styles */
+      .btn-primary {
+        background-color: var(--secondary-red);
+        color: white;
+        transition: all 0.3s ease;
+      }
+      .btn-primary:hover {
+        background-color: var(--secondary-red-light);
+      }
+
+      .btn-outline {
+        border: 1px solid #d1d5db;
+        background: white;
+        transition: all 0.3s ease;
+      }
+      .btn-outline:hover {
+        background-color: #f3f4f6;
+        border-color: #9ca3af;
+      }
+
+      /* Action button icons */
+      .action-btn {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 6px;
+        transition: all 0.2s ease;
+        cursor: pointer;
+      }
+      .action-btn:hover {
+        background-color: #B8D8FF;
+      }
+      .action-btn.view:hover {
+        background-color: #B8D8FF;
+      }
+      .action-btn.edit:hover {
+        background-color: #B8D8FF;
+      }
+      .action-btn.delete:hover {
+        background-color: #fee2e2;
+        color: #dc2626;
+      }
+
+      /* Pagination */
+      .pagination-btn {
+        padding: 6px 12px;
+        border: 1px solid #d1d5db;
+        background: white;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+      .pagination-btn:hover:not(:disabled) {
+        background-color: #f3f4f6;
+      }
+      .pagination-btn.active {
+        background-color: var(--secondary-red);
+        color: white;
+        border-color: var(--secondary-red);
+      }
+      .pagination-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+      }
+
+      /* Language Switch Button */
+      .lang-switch {
+        position: fixed;
+        top: 16px;
+        right: 16px;
+        z-index: 1000;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 16px;
+        background: var(--primary);
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 14px;
+        font-weight: 500;
+        box-shadow: 0 2px 8px rgba(0,0,0,0.15);
+        transition: all 0.3s ease;
+      }
+
+      .lang-switch:hover {
+        background: var(--primary-dark);
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+      }
+
+      .lang-switch i {
+        font-size: 16px;
+      }
+
+      /* Hide elements based on language */
+      .lang-en { display: block; }
+      .lang-km { display: none; }
+      
+      body.khmer-mode .lang-en { display: none; }
+      body.khmer-mode .lang-km { display: block; }
+      body.khmer-mode * {
+        font-family: "Kantumruy Pro", "Inter", "Roboto", "Segoe UI", Arial, sans-serif;
+      }
+
+      /* Search input */
+      .search-input {
+        transition: all 0.3s ease;
+      }
+      .search-input:focus {
+        border-color: var(--secondary-red);
+        box-shadow: 0 0 0 3px rgba(220, 38, 38, 0.1);
+      }
+    </style>
+  </head>
+  <body class="bg-gray-100">
+    <!-- Language Switch Button -->
+    <!-- <button class="lang-switch" onclick="switchLanguage()">
+      <i class="fas fa-globe"></i>
+      <span id="lang-btn-text">ខ្មែរ</span>
+    </button> -->
+
+    <!-- Sidebar -->
+    <aside
+      class="sidebar fixed left-0 top-0 flex flex-col text-white shadow-2xl"
+    >
+      <!-- Logo/Brand -->
+      <div class="p-5 border-b border-white/20 side-head-footer">
+        <div class="flex items-center gap-3">
+          <div
+            class="w-10 h-10 bg-red-500 rounded-lg flex items-center justify-center"
+          >
+            <i class="fas fa-box-open text-white text-xl"></i>
+          </div>
+          <div>
+            <h1 class="text-xl font-bold">AMF Express</h1>
+            <p class="text-xs text-gray-300 lang-en">Logistics Management</p>
+            <p class="text-xs text-gray-300 lang-km">ការគ្រប់គ្រងដឹកជញ្ជូន</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Scrollable Menu -->
+      <div class="flex-1 overflow-y-auto py-4 text-white">
+        <!-- Dashboard -->
+        <div class="menu-item px-4 py-3 cursor-pointer flex items-center gap-3">
+          <i class="fas fa-th-large w-5 text-center"></i>
+          <span class="font-medium lang-en">Dashboard</span>
+          <span class="font-medium lang-km">ផ្ទាំងគ្រប់គ្រង</span>
+        </div>
+
+        <!-- Branch Setup -->
+        <!-- <div class="menu-group">
+          <div
+            class="menu-item px-4 py-3 cursor-pointer flex items-center justify-between"
+            onclick="toggleSubmenu(this)"
+          >
+            <div class="flex items-center gap-3">
+              <i class="fas fa-sitemap w-5 text-center"></i>
+              <span class="font-medium lang-en">Branch Setup</span>
+              <span class="font-medium lang-km">ការកំណត់សាខា</span>
+            </div>
+            <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+          </div>
+          <div class="submenu">
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-building w-4 text-center"></i>
+              <span class="lang-en">Chamkadong</span>
+              <span class="lang-km">ចំការដូង</span>
+            </div>
+          </div>
+        </div> -->
+
+        <!-- Customer Management -->
+        <div class="menu-group">
+          <div
+            class="menu-item px-4 py-3 cursor-pointer flex items-center justify-between"
+            onclick="toggleSubmenu(this)"
+          >
+            <div class="flex items-center gap-3">
+              <i class="fas fa-users w-5 text-center"></i>
+              <span class="font-medium lang-en">Customer Management</span>
+              <span class="font-medium lang-km">ការគ្រប់គ្រងអតិថិជន</span>
+            </div>
+            <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+          </div>
+          <div class="submenu">
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor gap-2 cursor-pointer flex items-center-sm"
+            >
+              <i class="fas fa-list w-4 text-center"></i>
+              <span class="lang-en">All Customer List</span>
+              <span class="lang-km">បញ្ជីអតិថិជនទាំងអស់</span>
+            </div>
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-user-plus w-4 text-center"></i>
+              <span class="lang-en">Create New Customer</span>
+              <span class="lang-km">បង្កើតអតិថិជនថ្មី</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Order Management -->
+        <div class="menu-group">
+          <div
+            class="menu-item px-4 py-3 cursor-pointer flex items-center justify-between"
+            onclick="toggleSubmenu(this)"
+          >
+            <div class="flex items-center gap-3">
+              <i class="fas fa-clipboard-list w-5 text-center"></i>
+              <span class="font-medium lang-en">Order Management</span>
+              <span class="font-medium lang-km">ការគ្រប់គ្រងការបញ្ជាទិញ</span>
+            </div>
+            <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+          </div>
+          <div class="submenu">
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-file-alt w-4 text-center"></i>
+              <span class="lang-en">All Order List</span>
+              <span class="lang-km">បញ្ជីការបញ្ជាទិញទាំងអស់</span>
+            </div>
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-plus-circle w-4 text-center"></i>
+              <span class="lang-en">Create New Order</span>
+              <span class="lang-km">បង្កើតការបញ្ជាទិញថ្មី</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Currency Exchange -->
+        <div class="menu-group">
+          <div
+            class="menu-item px-4 py-3 cursor-pointer flex items-center justify-between"
+            onclick="toggleSubmenu(this)"
+          >
+            <div class="flex items-center gap-3">
+              <i class="fas fa-exchange-alt w-5 text-center"></i>
+              <span class="font-medium lang-en">Currency Exchange</span>
+              <span class="font-medium lang-km">ការប្តូររូបិយប័ណ្ណ</span>
+            </div>
+            <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+          </div>
+          <div class="submenu">
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-list w-4 text-center"></i>
+              <span class="lang-en">All Exchange List</span>
+              <span class="lang-km">បញ្ជីប្តូរទាំងអស់</span>
+            </div>
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-plus w-4 text-center"></i>
+              <span class="lang-en">Create New Exchange</span>
+              <span class="lang-km">បង្កើតប្តូរថ្មី</span>
+            </div>
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-calculator w-4 text-center"></i>
+              <span class="lang-en">Currency Calculator</span>
+              <span class="lang-km">ម៉ាស៊ីនគិតលេខ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Logistics Management -->
+        <div class="menu-group">
+          <div
+            class="menu-item px-4 py-3 cursor-pointer flex items-center justify-between"
+            onclick="toggleSubmenu(this)"
+          >
+            <div class="flex items-center gap-3">
+              <i class="fas fa-truck-loading w-5 text-center"></i>
+              <span class="font-medium lang-en">Logistics Management</span>
+              <span class="font-medium lang-km">ការគ្រប់គ្រងភស្តុតាង</span>
+            </div>
+            <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+          </div>
+          <div class="submenu">
+            <!-- CN Warehouse -->
+            <div
+              class="menu-item px-4 py-2.5 pl-8 cursor-pointer flex items-center justify-between text-sm"
+              onclick="toggleSubmenu(this)"
+            >
+              <div class="flex items-center gap-2">
+                <span class="country-flag">🇨🇳</span>
+                <span class="font-medium lang-en">CN warehouse</span>
+                <span class="font-medium lang-km">ឃ្លាំងចិន</span>
+              </div>
+              <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+            </div>
+            <div class="submenu nested-submenu">
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-boxes w-4 text-center"></i>
+                <span class="lang-en">All CN Package List</span>
+                <span class="lang-km">បញ្ជីកញ្ចប់ចិនទាំងអស់</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-dolly w-4 text-center"></i>
+                <span class="lang-en">Create CN Received</span>
+                <span class="lang-km">បង្កើតទទួលពីចិន</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-edit w-4 text-center"></i>
+                <span class="lang-en">Update container parcels</span>
+                <span class="lang-km">ធ្វើបច្ចុប្បន្នភាពកញ្ចប់</span>
+              </div>
+            </div>
+
+            <!-- KH Warehouse -->
+            <div
+              class="menu-item px-4 py-2.5 pl-8 cursor-pointer flex items-center justify-between text-sm"
+              onclick="toggleSubmenu(this)"
+            >
+              <div class="flex items-center gap-2">
+                <span class="country-flag">🇰🇭</span>
+                <span class="font-medium lang-en">KH warehouse</span>
+                <span class="font-medium lang-km">ឃ្លាំងកម្ពុជា</span>
+              </div>
+              <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+            </div>
+            <div class="submenu nested-submenu">
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-boxes w-4 text-center"></i>
+                <span class="lang-en">All KH Package List</span>
+                <span class="lang-km">បញ្ជីកញ្ចប់កម្ពុជាទាំងអស់</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-truck-loading w-4 text-center"></i>
+                <span class="lang-en">Create KH Arrival</span>
+                <span class="lang-km">បង្កើតមកដល់</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-tasks w-4 text-center"></i>
+                <span class="lang-en">Package Assignments</span>
+                <span class="lang-km">ការចាត់ការកញ្ចប់</span>
+              </div>
+            </div>
+            
+            <!-- Track & Trace Package -->
+            <div
+              class="menu-item px-4 py-2.5 pl-8 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-map-marker-alt w-4 text-center"></i>
+              <span class="lang-en">Track & Trace Package</span>
+              <span class="lang-km">តាមដានកញ្ចប់</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Finance Center -->
+        <div class="menu-group">
+          <div
+            class="menu-item px-4 py-3 cursor-pointer flex items-center justify-between"
+            onclick="toggleSubmenu(this)"
+          >
+            <div class="flex items-center gap-3">
+              <i class="fas fa-money-check-alt w-5 text-center"></i>
+              <span class="font-medium lang-en">Finance Center</span>
+              <span class="font-medium lang-km">មជ្ឈមណ្ឌលហិរញ្ញវាយ</span>
+            </div>
+            <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+          </div>
+          <div class="submenu">
+            <!-- Accounts -->
+            <div
+              class="menu-item px-4 py-2.5 pl-8 cursor-pointer flex items-center justify-between text-sm"
+              onclick="toggleSubmenu(this)"
+            >
+              <div class="flex items-center gap-2">
+                <i class="fas fa-wallet w-4 text-center"></i>
+                <span class="font-medium lang-en">Accounts</span>
+                <span class="font-medium lang-km">គណនី</span>
+              </div>
+              <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+            </div>
+            <div class="submenu nested-submenu">
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-arrow-up w-4 text-center text-green-600"></i>
+                <span class="lang-en">Record Income</span>
+                <span class="lang-km">កត់ចំណូល</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-arrow-down w-4 text-center text-red-600"></i>
+                <span class="lang-en">Record Expenses</span>
+                <span class="lang-km">កត់ចំណាយ</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-book w-4 text-center"></i>
+                <span class="lang-en">Journal Entries</span>
+                <span class="lang-km">ចំណត់ការប្រចាំថ្ងៃ</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-exchange w-4 text-center"></i>
+                <span class="lang-en">Record Money Transfer</span>
+                <span class="lang-km">កត់ផ្ទេរប្រាក់</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-money-bill-wave w-4 text-center"></i>
+                <span class="lang-en">Record deposit or withdrawal</span>
+                <span class="lang-km">កត់ដាក់/ដៀល</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-building w-4 text-center"></i>
+                <span class="lang-en">Fixed Assets</span>
+                <span class="lang-km">ទ្រព្យសកម្ម</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-ellipsis-h w-4 text-center"></i>
+                <span class="lang-en">Other</span>
+                <span class="lang-km">ផ្សេងៗ</span>
+              </div>
+            </div>
+            
+            <!-- Finance -->
+            <div
+              class="menu-item px-4 py-2.5 pl-8 cursor-pointer flex items-center justify-between text-sm"
+              onclick="toggleSubmenu(this)"
+            >
+              <div class="flex items-center gap-2">
+                <i class="fas fa-dollar-sign w-4 text-center"></i>
+                <span class="font-medium lang-en">Finance</span>
+                <span class="lang-km">ហិរញ្ញវាយ</span>
+              </div>
+              <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+            </div>
+            <div class="submenu nested-submenu">
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-chart-pie w-4 text-center"></i>
+                <span class="lang-en">Financial Summary</span>
+                <span class="lang-km">សេចក្ដីសង្ខេបហិរញ្ញវាយ</span>
+              </div>
+              <!-- Income Report -->
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center justify-between text-sm"
+                onclick="toggleSubmenu(this)"
+              >
+                <div class="flex items-center gap-2">
+                  <i class="fas fa-file-invoice w-4 text-center"></i>
+                  <span class="lang-en">Income Report</span>
+                  <span class="lang-km">របាយការណ៍ចំណូល</span>
+                </div>
+                <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+              </div>
+              <div class="submenu nested-submenu">
+                <div
+                  class="menu-item px-4 py-2 pl-20 cursor-pointer flex items-center gap-2 text-sm"
+                >
+                  <i class="fas fa-truck w-4 text-center"></i>
+                  <span class="lang-en">Logistics Income</span>
+                  <span class="lang-km">ចំណូលដឹកជញ្ជូន</span>
+                </div>
+                <div
+                  class="menu-item px-4 py-2 pl-20 cursor-pointer flex items-center gap-2 text-sm"
+                >
+                  <i class="fas fa-shopping-cart w-4 text-center"></i>
+                  <span class="lang-en">Orders Goods Income</span>
+                  <span class="lang-km">ចំណូលលក់ទំនិញ</span>
+                </div>
+                <div
+                  class="menu-item px-4 py-2 pl-20 cursor-pointer flex items-center gap-2 text-sm"
+                >
+                  <i class="fas fa-exchange-alt w-4 text-center"></i>
+                  <span class="lang-en">Currency Exchange Income</span>
+                  <span class="lang-km">ចំណូលប្តូររូបិយ</span>
+                </div>
+                <div
+                  class="menu-item px-4 py-2 pl-20 cursor-pointer flex items-center gap-2 text-sm"
+                >
+                  <i class="fas fa-plus-circle w-4 text-center"></i>
+                  <span class="lang-en">Other Operating Income</span>
+                  <span class="lang-km">ចំណូលផ្សេងៗ</span>
+                </div>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-file-invoice-dollar w-4 text-center"></i>
+                <span class="lang-en">Income Statement Report</span>
+                <span class="lang-km">របាយការណ៍ចំណេញ</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-money-bill-alt w-4 text-center"></i>
+                <span class="lang-en">Cash Flow Statement</span>
+                <span class="lang-km">របាយការណ៍ចំណូលចំណាយ</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-balance-scale w-4 text-center"></i>
+                <span class="lang-en">Trial Balance</span>
+                <span class="lang-km">តុលៀងសាកល្បង</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-landmark w-4 text-center"></i>
+                <span class="lang-en">Balance Sheet Statement</span>
+                <span class="lang-km">របាយការណ៍សេចក្ដីថ្លៃ</span>
+              </div>
+              <div
+                class="menu-item px-4 py-2 pl-16 cursor-pointer flex items-center gap-2 text-sm"
+              >
+                <i class="fas fa-ellipsis-h w-4 text-center"></i>
+                <span class="lang-en">Other</span>
+                <span class="lang-km">ផ្សេងៗ</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Reports Management -->
+        <div class="menu-group">
+          <div
+            class="menu-item px-4 py-3 cursor-pointer flex items-center justify-between"
+            onclick="toggleSubmenu(this)"
+          >
+            <div class="flex items-center gap-3">
+              <i class="fas fa-chart-bar w-5 text-center"></i>
+              <span class="font-medium lang-en">Reports Management</span>
+              <span class="font-medium lang-km">ការគ្រប់គ្រងរបាយការណ៍</span>
+            </div>
+            <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+          </div>
+          <div class="submenu">
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-file-export w-4 text-center"></i>
+              <span class="lang-en">Export Reports</span>
+              <span class="lang-km">នាំចេញរបាយការណ៍</span>
+            </div>
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-calendar-check w-4 text-center"></i>
+              <span class="lang-en">Daily Reports</span>
+              <span class="lang-km">របាយការណ៍ប្រចាំថ្ងៃ</span>
+            </div>
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-calendar-week w-4 text-center"></i>
+              <span class="lang-en">Weekly Reports</span>
+              <span class="lang-km">របាយការណ៍ប្រចាំសប្តាហ៍</span>
+            </div>
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-calendar-alt w-4 text-center"></i>
+              <span class="lang-en">Monthly Reports</span>
+              <span class="lang-km">របាយការណ៍ប្រចាំខែ</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Settings -->
+        <div class="menu-group">
+          <div
+            class="menu-item px-4 py-3 cursor-pointer flex items-center justify-between"
+            onclick="toggleSubmenu(this)"
+          >
+            <div class="flex items-center gap-3">
+              <i class="fas fa-cogs w-5 text-center"></i>
+              <span class="font-medium lang-en">Settings</span>
+              <span class="font-medium lang-km">ការកំណត់</span>
+            </div>
+            <i class="fas fa-chevron-down rotate-icon text-xs"></i>
+          </div>
+          <div class="submenu">
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-user-cog w-4 text-center"></i>
+              <span class="lang-en">Profile Settings</span>
+              <span class="lang-km">ការកំណត់ប្រូហ្វាល</span>
+            </div>
+            <div
+            >
+              <i class="fas fa-credit-card w-4 text-center"></i>
+              <span>Payment methods</span>
+            </div>
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-shipping-fast w-4 text-center"></i>
+              <span>Local courier service</span>
+            </div>
+            <div
+              class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm"
+            >
+              <i class="fas fa-exchange-alt w-4 text-center"></i>
+              <span>Exchange Rate Management</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Footer -->
+      <div class="p-4 border-t border-white/20 mt-auto side-head-footer">
+        <!-- Profile Section -->
+        <div
+          class="flex items-center gap-3 p-2 rounded-lg hover:bg-white/10 transition-colors cursor-pointer"
+        >
+          <div
+            class="w-10 h-10 rounded-full bg-white/20 flex items-center justify-center"
+          >
+            <i class="fas fa-user text-white"></i>
+          </div>
+          <div class="flex-1 min-w-0">
+            <p class="text-sm font-medium text-white truncate">John Doe</p>
+            <p class="text-xs text-gray-300 truncate">Administrator</p>
+          </div>
+          <i
+            class="fas fa-sign-out-alt text-gray-300 hover:text-white transition-colors"
+          ></i>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Main Content Area (for demo) -->
+     <main class="main-content">
+      <!-- Header -->
+      <header class="h-[85px] bg-[#001f4d] px-4 lg:px-6 shadow-md sticky top-0 z-50">
+        <div class="h-full flex items-center justify-between">
+          <!-- Mobile Menu Button -->
+          <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 h-8 rounded-md gap-1.5 px-3 has-[&>svg]:px-2.5 lg:hidden text-white hover:bg-white/10">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu h-5 w-5" aria-hidden="true">
+              <path d="M4 5h16"></path>
+              <path d="M4 12h16"></path>
+              <path d="M4 19h16"></path>
+            </svg>
+          </button>
+          <div></div>
+          <!-- Right Side Buttons -->
+          <div class="flex items-center gap-3">
+            <!-- Branch Readiness Button -->
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 h-8 rounded-md px-3 has-[&>svg]:px-2.5 gap-2 hover:bg-white/10 text-white hover:text-white branch-readiness-button" type="button">
+              <span class="hidden sm:inline">ការរៀបចំសាខា</span>
+            </button>
+            <!-- Circle Check Button -->
+            <button class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-md text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 size-9 text-white hover:bg-white/10 relative">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-circle-check h-5 w-5 text-green-400" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"></circle>
+                <path d="m9 12 2 2 4-4"></path>
+              </svg>
+            </button>
+            <!-- Branch Selector Dropdown -->
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 h-8 rounded-md px-3 has-[&>svg]:px-2.5 gap-2 text-white hover:text-white hover:bg-white/10" data-tour="branch-selector" type="button">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-building2 h-4 w-4" aria-hidden="true">
+                <path d="M6 22V4a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v18Z"></path>
+                <path d="M6 12H4a2 2 0 0 0-2 2v6a2 2 0 0 0 2 2h2"></path>
+                <path d="M18 9h2a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-2"></path>
+                <path d="M10 6h4"></path>
+                <path d="M10 10h4"></path>
+                <path d="M10 14h4"></path>
+                <path d="M10 18h4"></path>
+              </svg>
+              <span class="hidden sm:inline max-w-[150px] truncate">Chamkadong</span>
+            </button>
+            <!-- Language Selector -->
+            <button class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium transition-all disabled:pointer-events-none disabled:opacity-50 [&_svg]:pointer-events-none [&_svg:not([class*='size-'])]:size-4 shrink-0 [&_svg]:shrink-0 outline-none focus-visible:border-ring focus-visible:ring-ring/50 focus-visible:ring-[3px] aria-invalid:ring-destructive/20 dark:aria-invalid:ring-destructive/40 aria-invalid:border-destructive dark:hover:bg-accent/50 h-8 rounded-md px-3 has-[&>svg]:px-2.5 gap-2 text-white hover:text-white hover:bg-white/10" type="button">
+              <span class="hidden sm:inline">🇰🇭 ភាសាខ្មែរ</span>
+              <span class="sm:hidden">🇰🇭</span>
+            </button>
+          </div>
+        </div>
+      </header>
+
+      <!-- Breadcrumb Navigation -->
+      <div class="max-w-[120rem] mx-auto px-4 lg:px-6 py-3 bg-white border-b">
+        <nav aria-label="breadcrumb" data-slot="breadcrumb">
+          <ol data-slot="breadcrumb-list" class="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5">
+            <div class="flex items-center gap-1.5 sm:gap-2.5">
+              <li data-slot="breadcrumb-item" class="inline-flex items-center gap-1.5">
+                <a class="hover:text-foreground transition-colors flex items-center gap-1" data-slot="breadcrumb-link" href="/en/">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-house h-4 w-4" aria-hidden="true">
+                    <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+                    <path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"></path>
+                  </svg>
+                  <span>Dashboard</span>
+                </a>
+              </li>
+              <li data-slot="breadcrumb-separator" role="presentation" aria-hidden="true" class="[&>svg]:size-3.5">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-chevron-right" aria-hidden="true">
+                  <path d="m9 18 6-6-6-6"></path>
+                </svg>
+              </li>
+            </div>
+            <div class="flex items-center gap-1.5 sm:gap-2.5">
+              <li data-slot="breadcrumb-item" class="inline-flex items-center gap-1.5">
+                <span data-slot="breadcrumb-page" role="link" aria-disabled="true" aria-current="page" class="text-foreground font-normal">Customers</span>
+              </li>
+            </div>
+          </ol>
+        </nav>
+      </div>
+
+      <!-- Content -->
+      <div class="p-6 max-w-[1600px] mx-auto">
+        <!-- Header Section -->
+        <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+          <div class="flex items-center gap-4">
+            <button class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+              <i class="fas fa-arrow-left text-gray-600"></i>
+            </button>
+            <div>
+              <h1 class="text-2xl font-bold text-gray-900">Customer Management</h1>
+              <p class="text-gray-500 text-sm">Manage customer accounts and information across all branches</p>
+            </div>
+          </div>
+          <button class="inline-flex items-center justify-center gap-2 bg-[#dc2626] text-white rounded-lg px-4 py-2.5 font-medium hover:bg-red-700 transition-colors shadow-sm">
+            <i class="fas fa-plus text-sm"></i>
+            Create New Customer
+          </button>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+          <!-- Total Customers -->
+          <div class="bg-white rounded-2xl flex  items-center justify-between p-[35px] shadow-sm border border-gray-100 relative overflow-hidden group">
+            
+               <div>
+              <div class="text-3xl font-bold text-gray-900 mb-1">292</div>
+            <p class="text-sm text-gray-500">Total Customers</p>
+            </div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-sm">
+                <i class="fas fa-users text-blue-600 text-lg"></i>
+              </div>
+             
+            </div>
+         
+          </div>
+
+          <!-- Active Customers -->
+          <div class="bg-white rounded-2xl flex  items-center justify-between p-[35px] shadow-sm border border-gray-100 relative overflow-hidden group">
+            
+             <div>
+             <div class="text-3xl font-bold text-gray-900 mb-1">291</div>
+            <p class="text-sm text-gray-500">Active Customers</p>
+           </div>
+            <div class="items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center shadow-sm">
+                <i class="fas fa-user-check text-green-600 text-lg"></i>
+              </div>
+              
+            </div>
+          
+          </div>
+
+          <!-- Inactive Customers -->
+          <div class="bg-white rounded-2xl flex  items-center justify-between p-[35px] shadow-sm border border-gray-100 relative overflow-hidden group">
+            <div>
+              <div class="text-3xl font-bold text-gray-900 mb-1">1</div>
+            <p class="text-sm text-gray-500">Inactive Customers</p>
+            </div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center shadow-sm">
+                <i class="fas fa-user-clock text-red-600 text-lg"></i>
+              </div>
+              
+            </div>
+            
+          </div>
+
+          <!-- New Customers -->
+          <div class="bg-white rounded-2xl flex  items-center justify-between p-[35px] shadow-sm border border-gray-100 relative overflow-hidden group">
+            <div>
+              <div class="text-3xl font-bold text-gray-900 mb-1">291</div>
+                        <p class="text-sm text-gray-500">New Customers</p>
+            </div>
+            <div class="flex items-center justify-between mb-4">
+              <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center shadow-sm">
+                <i class="fas fa-user-plus text-purple-600 text-lg"></i>
+              </div>
+             
+            </div>
+           
+          </div>
+        </div>
+
+        <!-- Search and Filter Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 p-4 mb-6">
+          <div class="flex flex-col sm:flex-row gap-3">
+            <div class="relative flex-1">
+              <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
+              <input type="text" placeholder="Search customers by name, phone, or email..." class="w-full pl-10 pr-4 py-2.5 border border-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500 focus:border-transparent text-sm" />
+            </div>
+            <button class="inline-flex items-center justify-center gap-2 border border-gray-200 bg-white text-gray-700 rounded-lg px-4 py-2.5 font-medium hover:bg-gray-50 transition-colors">
+              <i class="fas fa-filter text-sm"></i> Filters
+            </button>
+            <button class="inline-flex items-center justify-center gap-2 border border-gray-200 bg-white text-gray-700 rounded-lg px-4 py-2.5 font-medium hover:bg-gray-50 transition-colors">
+              <i class="fas fa-ellipsis-v text-sm"></i> More
+            </button>
+          </div>
+        </div>
+
+        <!-- Table Section -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div class="p-4 border-b border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <p class="text-sm text-gray-500">Showing 1 to 20 of 291 results</p>
+            <div class="flex items-center gap-2">
+              <span class="text-sm text-gray-500">Rows per page</span>
+              <select class="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+                <option>20</option><option>50</option><option>100</option>
+              </select>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full">
+              <thead class="bg-gray-50">
+                <tr>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Customer</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Contact</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Type</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Tier</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Status</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Total Spent</th>
+                  <th class="px-4 py-3 text-left text-xs font-semibold text-gray-500 uppercase">Registered</th>
+                  <th class="px-4 py-3 text-center text-xs font-semibold text-gray-500 uppercase">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-gray-100">
+                <tr class="table-row-hover">
+                  <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div><div><div class="font-medium text-gray-900">Kimhouy</div><div class="text-xs text-gray-400">20309-IND26030015</div></div></div></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-phone text-gray-400 text-xs"></i>070717273</div></td>
+                  <td class="px-4 py-3"><span class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                  <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span></td>
+                  <td class="px-4 py-3"><span class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-4 py-3 font-medium text-gray-900">$0</td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-calendar text-gray-400 text-xs"></i>10/03/2026</div></td>
+                  <td class="px-4 py-3"><div class="flex items-center justify-center gap-1"><button class="action-btn view"><i class="fas fa-eye text-sm text-[#01408f]"></i></button><button class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div></td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div><div><div class="font-medium text-gray-900">Seyha</div><div class="text-xs text-gray-400">20309-IND26030014</div></div></div></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-phone text-gray-400 text-xs"></i>0962364414</div></td>
+                  <td class="px-4 py-3"><span class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                  <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span></td>
+                  <td class="px-4 py-3"><span class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-4 py-3 font-medium text-gray-900">$0</td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-calendar text-gray-400 text-xs"></i>10/03/2026</div></td>
+                  <td class="px-4 py-3"><div class="flex items-center justify-center gap-1"><button class="action-btn view"><i class="fas fa-eye text-sm text-[#01408f]"></i></button><button class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div></td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div><div><div class="font-medium text-gray-900">heang</div><div class="text-xs text-gray-400">20309-IND26030013</div></div></div></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-phone text-gray-400 text-xs"></i>0962364414</div></td>
+                  <td class="px-4 py-3"><span class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                  <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span></td>
+                  <td class="px-4 py-3"><span class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-4 py-3 font-medium text-gray-900">$0</td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-calendar text-gray-400 text-xs"></i>10/03/2026</div></td>
+                  <td class="px-4 py-3"><div class="flex items-center justify-center gap-1"><button class="action-btn view"><i class="fas fa-eye text-sm text-[#01408f]"></i></button><button class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div></td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div><div><div class="font-medium text-gray-900">Seng</div><div class="text-xs text-gray-400">20309-IND26030011</div></div></div></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-phone text-gray-400 text-xs"></i>012131415</div></td>
+                  <td class="px-4 py-3"><span class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                  <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span></td>
+                  <td class="px-4 py-3"><span class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-4 py-3 font-medium text-gray-900">$0</td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-calendar text-gray-400 text-xs"></i>09/03/2026</div></td>
+                  <td class="px-4 py-3"><div class="flex items-center justify-center gap-1"><button class="action-btn view"><i class="fas fa-eye text-sm text-[#01408f]"></i></button><button class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div></td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div><div><div class="font-medium text-gray-900">Hong</div><div class="text-xs text-gray-400">20309-IND26030010</div></div></div></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-phone text-gray-400 text-xs"></i>0962364414</div></td>
+                  <td class="px-4 py-3"><span class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                  <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span></td>
+                  <td class="px-4 py-3"><span class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-4 py-3 font-medium text-gray-900">$0</td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-calendar text-gray-400 text-xs"></i>09/03/2026</div></td>
+                  <td class="px-4 py-3"><div class="flex items-center justify-center gap-1"><button class="action-btn view"><i class="fas fa-eye text-sm text-[#01408f]"></i></button><button class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div></td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div><div><div class="font-medium text-gray-900">Sopheak</div><div class="text-xs text-gray-400">20309-IND26030009</div></div></div></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-phone text-gray-400 text-xs"></i>017181920</div></td>
+                  <td class="px-4 py-3"><span class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                  <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span></td>
+                  <td class="px-4 py-3"><span class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-4 py-3 font-medium text-gray-900">$262.19</td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-calendar text-gray-400 text-xs"></i>07/03/2026</div></td>
+                  <td class="px-4 py-3"><div class="flex items-center justify-center gap-1"><button class="action-btn view"><i class="fas fa-eye text-sm text-[#01408f]"></i></button><button class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div></td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div><div><div class="font-medium text-gray-900">Phearom</div><div class="text-xs text-gray-400">20309-IND26030008</div></div></div></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-phone text-gray-400 text-xs"></i>016171819</div></td>
+                  <td class="px-4 py-3"><span class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                  <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span></td>
+                  <td class="px-4 py-3"><span class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-4 py-3 font-medium text-gray-900">$8,526.45</td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-calendar text-gray-400 text-xs"></i>07/03/2026</div></td>
+                  <td class="px-4 py-3"><div class="flex items-center justify-center gap-1"><button class="action-btn view"><i class="fas fa-eye text-sm text-[#01408f]"></i></button><button class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div></td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div><div><div class="font-medium text-gray-900">Tong</div><div class="text-xs text-gray-400">20309-IND26030007</div></div></div></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-phone text-gray-400 text-xs"></i>015161718</div></td>
+                  <td class="px-4 py-3"><span class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                  <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span></td>
+                  <td class="px-4 py-3"><span class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-4 py-3 font-medium text-gray-900">$515</td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-calendar text-gray-400 text-xs"></i>07/03/2026</div></td>
+                  <td class="px-4 py-3"><div class="flex items-center justify-center gap-1"><button class="action-btn view"><i class="fas fa-eye text-sm text-[#01408f]"></i></button><button class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div></td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div><div><div class="font-medium text-gray-900">Seth</div><div class="text-xs text-gray-400">20309-IND26030006</div></div></div></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-phone text-gray-400 text-xs"></i>012131415</div></td>
+                  <td class="px-4 py-3"><span class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                  <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span></td>
+                  <td class="px-4 py-3"><span class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-4 py-3 font-medium text-gray-900">$1,767</td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-calendar text-gray-400 text-xs"></i>07/03/2026</div></td>
+                  <td class="px-4 py-3"><div class="flex items-center justify-center gap-1"><button class="action-btn view"><i class="fas fa-eye text-sm text-[#01408f]"></i></button><button class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div></td>
+                </tr>
+                <tr class="table-row-hover">
+                  <td class="px-4 py-3"><div class="flex items-center gap-3"><div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i class="fas fa-user text-gray-400"></i></div><div><div class="font-medium text-gray-900">Reach</div><div class="text-xs text-gray-400">20309-IND26030005</div></div></div></td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-phone text-gray-400 text-xs"></i>097929394</div></td>
+                  <td class="px-4 py-3"><span class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                  <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span></td>
+                  <td class="px-4 py-3"><span class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                  <td class="px-4 py-3 font-medium text-gray-900">$43,705.32</td>
+                  <td class="px-4 py-3"><div class="flex items-center gap-2 text-sm text-gray-600"><i class="fas fa-calendar text-gray-400 text-xs"></i>07/03/2026</div></td>
+                  <td class="px-4 py-3"><div class="flex items-center justify-center gap-1"><button class="action-btn view"><i class="fas fa-eye text-sm text-[#01408f]"></i></button><button class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="p-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+            <p class="text-sm text-gray-500">Showing 1 to 20 of 291 results</p>
+            <div class="flex items-center gap-2">
+              <button class="pagination-btn" disabled><i class="fas fa-chevron-left mr-1"></i> Previous</button>
+              <button class="pagination-btn active">1</button>
+              <button class="pagination-btn">2</button>
+              <button class="pagination-btn">3</button>
+              <span class="text-gray-400 px-1">...</span>
+              <button class="pagination-btn">15</button>
+              <button class="pagination-btn">Next <i class="fas fa-chevron-right ml-1"></i></button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+       
+      
+    </main>
+
+    <script>
+      function switchLanguage() {
+        window.location.href = 'side_Khmer.html';
+      }
+
+      function toggleSubmenu(element) {
+        const submenu = element.nextElementSibling;
+        const icon = element.querySelector(".rotate-icon");
+
+        // Toggle current submenu only - don't close other dropdowns
+        if (submenu && submenu.classList.contains('submenu')) {
+          submenu.classList.toggle("open");
+          icon.classList.toggle("open");
+        }
+
+        // Toggle active state for the dropdown toggle
+        element.classList.toggle("active");
+      }
+
+      // Add click event to all menu items
+      document.querySelectorAll(".menu-item").forEach((item) => {
+        item.addEventListener("click", function (e) {
+          // Remove active from all menu items first
+          document
+            .querySelectorAll(".menu-item")
+            .forEach((i) => i.classList.remove("active"));
+
+          // Add active to clicked item
+          this.classList.add("active");
+        });
+      });
+    </script>
+  </body>
+</html>
