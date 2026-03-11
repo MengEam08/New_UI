@@ -388,21 +388,19 @@
           </div>
           <i class="fas fa-chevron-down rotate-icon text-xs"></i>
         </div>
-        <div class="submenu">
-         <a href="Customer-List.html">
-           <div class="menu-item px-4 py-2.5 pl-12 cursor gap-2 cursor-pointer flex items-center-sm">
+        <div class="submenu open">
+          <div class="menu-item px-4 py-2.5 pl-12 cursor gap-2 cursor-pointer flex items-center-sm active">
             <i class="fas fa-list w-4 text-center"></i>
             <span class="lang-en">All Customer List</span>
             <span class="lang-km">បញ្ជីអតិថិជនទាំងអស់</span>
           </div>
-         </a>
-         <a href="Create-Customer.html">
-           <div class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm">
+          <a href="Create-Customer.html">
+            <div class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm">
             <i class="fas fa-user-plus w-4 text-center"></i>
             <span class="lang-en">Create New Customer</span>
             <span class="lang-km">បង្កើតអតិថិជនថ្មី</span>
           </div>
-         </a>
+          </a>
         </div>
       </div>
 
@@ -706,35 +704,7 @@
       </div>
 
       <!-- Settings -->
-      <!-- <div class="menu-group">
-        <div class="menu-item px-4 py-3 cursor-pointer flex items-center justify-between" onclick="toggleSubmenu(this)">
-          <div class="flex items-center gap-3">
-            <i class="fas fa-cogs w-5 text-center"></i>
-            <span class="font-medium lang-en">Settings</span>
-            <span class="font-medium lang-km">ការកំណត់</span>
-          </div>
-          <i class="fas fa-chevron-down rotate-icon text-xs"></i>
-        </div>
-        <div class="submenu">
-          <div class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm">
-            <i class="fas fa-user-cog w-4 text-center"></i>
-            <span class="lang-en">Profile Settings</span>
-            <span class="lang-km">ការកំណត់ប្រូហ្វាល</span>
-          </div>
-          <div>
-            <i class="fas fa-credit-card w-4 text-center"></i>
-            <span>Payment methods</span>
-          </div>
-          <div class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm">
-            <i class="fas fa-shipping-fast w-4 text-center"></i>
-            <span>Local courier service</span>
-          </div>
-          <div class="menu-item px-4 py-2.5 pl-12 cursor-pointer flex items-center gap-2 text-sm">
-            <i class="fas fa-exchange-alt w-4 text-center"></i>
-            <span>Exchange Rate Management</span>
-          </div>
-        </div>
-      </div> -->
+     
     </div>
 
     <!-- Footer -->
@@ -816,14 +786,577 @@
       </div>
     </header>
 
-    
+    <!-- Breadcrumb Navigation -->
+    <div class="max-w-[120rem] mx-auto px-4 lg:px-6 py-3 bg-white border-b">
+      <nav aria-label="breadcrumb" data-slot="breadcrumb">
+        <ol data-slot="breadcrumb-list"
+          class="text-muted-foreground flex flex-wrap items-center gap-1.5 text-sm break-words sm:gap-2.5">
+          <div class="flex items-center gap-1.5 sm:gap-2.5">
+            <li data-slot="breadcrumb-item" class="inline-flex items-center gap-1.5">
+              <a class="hover:text-foreground transition-colors flex items-center gap-1" data-slot="breadcrumb-link"
+                href="/en/">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                  stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                  class="lucide lucide-house h-4 w-4" aria-hidden="true">
+                  <path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"></path>
+                  <path
+                    d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z">
+                  </path>
+                </svg>
+                <span>Dashboard</span>
+              </a>
+            </li>
+            <li data-slot="breadcrumb-separator" role="presentation" aria-hidden="true" class="[&>svg]:size-3.5">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none"
+                stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+                class="lucide lucide-chevron-right" aria-hidden="true">
+                <path d="m9 18 6-6-6-6"></path>
+              </svg>
+            </li>
+          </div>
+          <div class="flex items-center gap-1.5 sm:gap-2.5">
+            <li data-slot="breadcrumb-item" class="inline-flex items-center gap-1.5">
+              <span data-slot="breadcrumb-page" role="link" aria-disabled="true" aria-current="page"
+                class="text-foreground font-normal">Customers</span>
+            </li>
+          </div>
+        </ol>
+      </nav>
+    </div>
 
     <!-- Content -->
-  <div class="p-6 max-w-[1600px] mx-auto flex justify-center items-center h-[calc(100vh-85px)] bg-gray-100">
-    <img src="/image/FavIcon.png" 
-        class="w-[500px] opacity-40"
-        alt="AMF Express Logo">
-  </div>
+    <div class="p-6 max-w-[1600px] mx-auto">
+      <!-- Header Section -->
+      <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 mb-6">
+        <div class="flex items-center gap-4">
+          <button class="p-2 rounded-lg hover:bg-gray-100 transition-colors">
+            <i class="fas fa-arrow-left text-gray-600"></i>
+          </button>
+          <div>
+            <h1 class="text-2xl font-bold text-gray-900">Customer Management</h1>
+            <p class="text-gray-500 text-sm">Manage customer accounts and information across all branches</p>
+          </div>
+        </div>
+        <a href="Create-Customer.html">
+          <button
+          class="inline-flex items-center justify-center gap-2 bg-[#dc2626] text-white rounded-lg px-4 py-2.5 font-medium hover:bg-red-700 transition-colors shadow-sm">
+          <i class="fas fa-plus text-sm"></i>
+          Create New Customer
+        </button>
+        </a>
+      </div>
+
+      <!-- Stats Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-6">
+        <!-- Total Customers -->
+        <div
+          class="bg-white rounded-2xl flex  items-center justify-between p-[35px] shadow-sm border border-gray-100 relative overflow-hidden group">
+
+          <div>
+            <div class="text-3xl font-bold text-gray-900 mb-1">292</div>
+            <p class="text-sm text-gray-500">Total Customers</p>
+          </div>
+          <div class="flex items-center justify-between mb-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-50 to-blue-100 flex items-center justify-center shadow-sm">
+              <i class="fas fa-users text-blue-600 text-lg"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Active Customers -->
+        <div
+          class="bg-white rounded-2xl flex  items-center justify-between p-[35px] shadow-sm border border-gray-100 relative overflow-hidden group">
+
+          <div>
+            <div class="text-3xl font-bold text-gray-900 mb-1">291</div>
+            <p class="text-sm text-gray-500">Active Customers</p>
+          </div>
+          <div class="items-center justify-between mb-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-gradient-to-br from-green-50 to-green-100 flex items-center justify-center shadow-sm">
+              <i class="fas fa-user-check text-green-600 text-lg"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Inactive Customers -->
+        <div
+          class="bg-white rounded-2xl flex  items-center justify-between p-[35px] shadow-sm border border-gray-100 relative overflow-hidden group">
+          <div>
+            <div class="text-3xl font-bold text-gray-900 mb-1">1</div>
+            <p class="text-sm text-gray-500">Inactive Customers</p>
+          </div>
+          <div class="flex items-center justify-between mb-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-gradient-to-br from-red-50 to-red-100 flex items-center justify-center shadow-sm">
+              <i class="fas fa-user-clock text-red-600 text-lg"></i>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- New Customers -->
+        <div
+          class="bg-white rounded-2xl flex  items-center justify-between p-[35px] shadow-sm border border-gray-100 relative overflow-hidden group">
+          <div>
+            <div class="text-3xl font-bold text-gray-900 mb-1">291</div>
+            <p class="text-sm text-gray-500">New Customers</p>
+          </div>
+          <div class="flex items-center justify-between mb-4">
+            <div
+              class="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-50 to-purple-100 flex items-center justify-center shadow-sm">
+              <i class="fas fa-user-plus text-purple-600 text-lg"></i>
+            </div>
+
+          </div>
+
+        </div>
+      </div>
+
+      <!-- Filters and Search -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 mb-6">
+        <div class="p-6">
+          <div class="flex flex-wrap items-center gap-4">
+            <div class="flex-1 min-w-[300px]">
+              <div class="relative">
+                <input type="text" placeholder="Search by name, ID, phone, email..."
+                  class="w-full pl-10 pr-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent" />
+                <i class="fas fa-search absolute left-3 top-3.5 text-gray-400"></i>
+              </div>
+            </div>
+
+            <select
+              class="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <option>All Tiers</option>
+              <option>Gold</option>
+              <option>Silver</option>
+              <option>Standard</option>
+            </select>
+
+            <select
+              class="px-4 py-2.5 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+              <option>All Status</option>
+              <option>Active</option>
+              <option>Inactive</option>
+            </select>
+
+            <button class="px-4 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+              <i class="fas fa-filter mr-2"></i>More Filters
+            </button>
+
+            <button class="px-4 py-2.5 border border-gray-300 rounded-lg hover:bg-gray-50 transition-colors">
+              <i class="fas fa-download mr-2"></i>Export
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Table Section -->
+      <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+        <div class="p-4 border-b bg-blue-400border-gray-100 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <p class="text-sm text-gray-500">Showing 1 to 20 of 291 results</p>
+          <div class="flex items-center gap-2">
+            <span class="text-sm text-gray-500">Rows per page</span>
+            <select
+              class="border border-gray-200 rounded-lg px-3 py-1.5 text-sm focus:outline-none focus:ring-2 focus:ring-red-500">
+              <option>20</option>
+              <option>50</option>
+              <option>100</option>
+            </select>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full">
+            <thead class="bg-blue-400">
+              <tr>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-white uppercase">ID</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-white  uppercase">Customer</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-white uppercase">Contact</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-white uppercase">Type</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-white uppercase">Tier</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-white uppercase">Status</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-white uppercase">Total Spent</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-white uppercase">Registered</th>
+                <th class="px-4 py-3 text-left text-xs font-semibold text-white uppercase">Created By</th>
+                <th class="px-4 py-3 text-center text-xs font-semibold text-white uppercase">Actions</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-100">
+              <tr class="table-row-hover">
+                <td class="px-4 py-3 text-sm text-gray-900">1</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i
+                        class="fas fa-user text-gray-400"></i></div>
+                    <div>
+                      <div class="font-medium text-gray-900">Kimhouy</div>
+                      <div class="text-xs text-gray-400">20309-IND26030015</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-phone text-gray-400 text-xs"></i>070717273</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                <td class="px-4 py-3 font-medium text-gray-900">$0</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-calendar text-gray-400 text-xs"></i>10/03/2026</div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">Admin</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-center gap-1"><button class="action-btn view"><i
+                        class="fas fa-eye text-sm text-[#01408f]"></i></button><button
+                      class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button
+                      class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div>
+                </td>
+              </tr>
+              <tr class="table-row-hover">
+                <td class="px-4 py-3 text-sm text-gray-900">2</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i
+                        class="fas fa-user text-gray-400"></i></div>
+                    <div>
+                      <div class="font-medium text-gray-900">Seyha</div>
+                      <div class="text-xs text-gray-400">20309-IND26030014</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-phone text-gray-400 text-xs"></i>0962364414</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                <td class="px-4 py-3 font-medium text-gray-900">$0</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-calendar text-gray-400 text-xs"></i>10/03/2026</div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">Admin</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-center gap-1"><button class="action-btn view"><i
+                        class="fas fa-eye text-sm text-[#01408f]"></i></button><button
+                      class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button
+                      class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div>
+                </td>
+              </tr>
+              <tr class="table-row-hover">
+                <td class="px-4 py-3 text-sm text-gray-900">3</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i
+                        class="fas fa-user text-gray-400"></i></div>
+                    <div>
+                      <div class="font-medium text-gray-900">heang</div>
+                      <div class="text-xs text-gray-400">20309-IND26030013</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-phone text-gray-400 text-xs"></i>0962364414</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                <td class="px-4 py-3 font-medium text-gray-900">$0</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-calendar text-gray-400 text-xs"></i>10/03/2026</div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">Admin</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-center gap-1"><button class="action-btn view"><i
+                        class="fas fa-eye text-sm text-[#01408f]"></i></button><button
+                      class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button
+                      class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div>
+                </td>
+              </tr>
+              <tr class="table-row-hover">
+                <td class="px-4 py-3 text-sm text-gray-900">4</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i
+                        class="fas fa-user text-gray-400"></i></div>
+                    <div>
+                      <div class="font-medium text-gray-900">Seng</div>
+                      <div class="text-xs text-gray-400">20309-IND26030011</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-phone text-gray-400 text-xs"></i>012131415</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                <td class="px-4 py-3 font-medium text-gray-900">$0</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-calendar text-gray-400 text-xs"></i>09/03/2026</div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">Admin</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-center gap-1"><button class="action-btn view"><i
+                        class="fas fa-eye text-sm text-[#01408f]"></i></button><button
+                      class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button
+                      class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div>
+                </td>
+              </tr>
+              <tr class="table-row-hover">
+                <td class="px-4 py-3 text-sm text-gray-900">5</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i
+                        class="fas fa-user text-gray-400"></i></div>
+                    <div>
+                      <div class="font-medium text-gray-900">Hong</div>
+                      <div class="text-xs text-gray-400">20309-IND26030010</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-phone text-gray-400 text-xs"></i>0962364414</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                <td class="px-4 py-3 font-medium text-gray-900">$0</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-calendar text-gray-400 text-xs"></i>09/03/2026</div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">Admin</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-center gap-1"><button class="action-btn view"><i
+                        class="fas fa-eye text-sm text-[#01408f]"></i></button><button
+                      class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button
+                      class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div>
+                </td>
+              </tr>
+              <tr class="table-row-hover">
+                <td class="px-4 py-3 text-sm text-gray-900">6</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i
+                        class="fas fa-user text-gray-400"></i></div>
+                    <div>
+                      <div class="font-medium text-gray-900">Sopheak</div>
+                      <div class="text-xs text-gray-400">20309-IND26030009</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-phone text-gray-400 text-xs"></i>017181920</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                <td class="px-4 py-3 font-medium text-gray-900">$262.19</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-calendar text-gray-400 text-xs"></i>07/03/2026</div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">Admin</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-center gap-1"><button class="action-btn view"><i
+                        class="fas fa-eye text-sm text-[#01408f]"></i></button><button
+                      class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button
+                      class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div>
+                </td>
+              </tr>
+              <tr class="table-row-hover">
+                <td class="px-4 py-3 text-sm text-gray-900">7</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i
+                        class="fas fa-user text-gray-400"></i></div>
+                    <div>
+                      <div class="font-medium text-gray-900">Phearom</div>
+                      <div class="text-xs text-gray-400">20309-IND26030008</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-phone text-gray-400 text-xs"></i>016171819</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                <td class="px-4 py-3 font-medium text-gray-900">$8,526.45</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-calendar text-gray-400 text-xs"></i>07/03/2026</div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">Admin</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-center gap-1"><button class="action-btn view"><i
+                        class="fas fa-eye text-sm text-[#01408f]"></i></button><button
+                      class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button
+                      class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div>
+                </td>
+              </tr>
+              <tr class="table-row-hover">
+                <td class="px-4 py-3 text-sm text-gray-900">8</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i
+                        class="fas fa-user text-gray-400"></i></div>
+                    <div>
+                      <div class="font-medium text-gray-900">Tong</div>
+                      <div class="text-xs text-gray-400">20309-IND26030007</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-phone text-gray-400 text-xs"></i>015161718</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                <td class="px-4 py-3 font-medium text-gray-900">$515</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-calendar text-gray-400 text-xs"></i>07/03/2026</div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">Admin</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-center gap-1"><button class="action-btn view"><i
+                        class="fas fa-eye text-sm text-[#01408f]"></i></button><button
+                      class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button
+                      class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div>
+                </td>
+              </tr>
+              <tr class="table-row-hover">
+                <td class="px-4 py-3 text-sm text-gray-900">9</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i
+                        class="fas fa-user text-gray-400"></i></div>
+                    <div>
+                      <div class="font-medium text-gray-900">Seth</div>
+                      <div class="text-xs text-gray-400">20309-IND26030006</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-phone text-gray-400 text-xs"></i>012131415</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                <td class="px-4 py-3 font-medium text-gray-900">$1,767</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-calendar text-gray-400 text-xs"></i>07/03/2026</div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">Admin</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-center gap-1"><button class="action-btn view"><i
+                        class="fas fa-eye text-sm text-[#01408f]"></i></button><button
+                      class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button
+                      class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div>
+                </td>
+              </tr>
+              <tr class="table-row-hover">
+                <td class="px-4 py-3 text-sm text-gray-900">10</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-3">
+                    <div class="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center"><i
+                        class="fas fa-user text-gray-400"></i></div>
+                    <div>
+                      <div class="font-medium text-gray-900">Reach</div>
+                      <div class="text-xs text-gray-400">20309-IND26030005</div>
+                    </div>
+                  </div>
+                </td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-phone text-gray-400 text-xs"></i>097929394</div>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="tier-standard px-2.5 py-1 rounded-full text-xs font-medium">Individual</span></td>
+                <td class="px-4 py-3"><span class="tier-gold px-2.5 py-1 rounded-full text-xs font-medium">Gold</span>
+                </td>
+                <td class="px-4 py-3"><span
+                    class="status-active px-2.5 py-1 rounded-full text-xs font-medium">Active</span></td>
+                <td class="px-4 py-3 font-medium text-gray-900">$43,705.32</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center gap-2 text-sm text-gray-600"><i
+                      class="fas fa-calendar text-gray-400 text-xs"></i>07/03/2026</div>
+                </td>
+                <td class="px-4 py-3 text-sm text-gray-600">Admin</td>
+                <td class="px-4 py-3">
+                  <div class="flex items-center justify-center gap-1"><button class="action-btn view"><i
+                        class="fas fa-eye text-sm text-[#01408f]"></i></button><button
+                      class="action-btn edit text-[#01408f]"><i class="fas fa-pen text-sm "></i></button><button
+                      class="action-btn delete text-[#D22B2B]"><i class="fas fa-trash text-sm "></i></button></div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="p-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-3">
+          <p class="text-sm text-gray-500">Showing 1 to 20 of 291 results</p>
+        </div>
+        <div class="pb-4 flex justify-center">
+          <div class="flex items-center gap-2">
+            <button class="pagination-btn rounded-xl" disabled><i class="fas fa-chevron-left mr-1"></i> Previous</button>
+            <button class="pagination-btn active rounded-xl">1</button>
+            <button class="pagination-btn rounded-xl">2</button>
+            <button class="pagination-btn rounded-xl">3</button>
+            <span class="text-gray-400 px-1">...</span>
+            <button class="pagination-btn rounded-xl">15</button>
+            <button class="pagination-btn rounded-xl">Next <i class="fas fa-chevron-right ml-1"></i></button>
+          </div>
+        </div>
+      </div>
+    </div>
 
   </main>
 
